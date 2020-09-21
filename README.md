@@ -1,2 +1,2 @@
 # re-read
-Primier proyecto repaso de DAW2
+Primer proyecto repaso de DAW2
