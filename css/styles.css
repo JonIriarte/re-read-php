@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-
+  font-family: monospace;
 }
 
 body {
@@ -10,7 +10,9 @@ body {
 .logo {
   background-color: #0B5345;
   padding: 20px;
-  text-align: center;
+  text-align: left;
+  color: white; 
+  font-size: 20px;
 }
 
 
