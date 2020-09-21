@@ -33,14 +33,15 @@ body {
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
-  background-color: #333;
+  background-color:white;
+  border-bottom: 2px solid #D35400;
 }
 
 /* Style the topnav links */
 .topnav a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -48,22 +49,27 @@ body {
 
 /* Change color on hover */
 .topnav a:hover {
-  background-color: #ddd;
-  /* Hay que cambiar el color del menu siguiente*/
-  color:#F3C11C ;
+  background-color: #D35400;
+  color: white;
 }
 
-/* Create three equal columns that floats next to each other */
+/* Create a column that floats next to the second one */
 .column.left {
   float: left;
   width: 66.6%;
   padding: 15px;
 }
-/* Create three equal columns that floats next to each other */
+/* Create a column that floats next to the first one */
 .column.right {
   float: left;
   width: 33.3%;
   padding: 15px;
+}
+
+.column.right p{
+  padding: 20px;
+  background-color: #117A65;
+  color: white; 
 }
 
 
