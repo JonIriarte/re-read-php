@@ -1,2 +1,3 @@
-# re-read
-Primier proyecto repaso de DAW2
+https://JonIriarte.github.io/re-read
+
+Primer proyecto repaso de DAW2
