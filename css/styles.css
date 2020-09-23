@@ -79,10 +79,33 @@ body {
   display: table;
   clear: both;
 }
+/*Clases para precio de libros*/
+.alineacionImg{
+  float: left;
+  width: 33.3%;
+  padding: 20px;
+}
+
+.alineacionImg Img{
+width: 100%;
+}
+/*Clases para la galería de eBooks*/
+.ebook{
+float:left; 
+width: 33.3%;
+padding: 20px;
+}
+.ebook Img{
+  width: 100%;
+}
+
+.ebook:hover{
+ background-color: red;
+}
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width:600px) {
-  .column {
+  .column.left, .column.right, .topnav a, .ebook {
     width: 100%;
   }
 }
