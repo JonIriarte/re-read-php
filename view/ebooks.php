@@ -26,22 +26,31 @@
   </div>
   <h3>Toda la actualidad en eBook</h3>
     <!--eBooks con descripción-->
+   <!--
     <div class="ebook">
         <img src="../img/cell.jpeg" alt="eBook 1">
     </div>
-    <div class="ebook">
-        <img src="../img/doctorsleep.jpeg" alt="eBook 2">
-    </div>
-    <div class="ebook">
-        <img src="../img/elciclodelhombrelobo.jpeg" alt="eBook 3">
-    </div>
-    <div class="ebook">
-        <img src="../img/elresplandor.jpeg" alt="eBook 4">
-    </div>
-    <div class="ebook">
-        <img src="../img/mientrasescribo.jpeg" alt="eBook 5">
-    </div> 
-    <div class="ebook"></div> 
+    -->
+   <?php
+    //Conexión con la BBDD
+    include '../services/connection.php'; 
+    $result=mysqli_query($conn, "SELECT Books.Description, Books.Img, Books.Title FROM books WHERE eBook !='0'"); 
+
+    if(!empty($result) && mysqli_num_rows($result) > 0 ){
+      //Datos de salida de cada fila
+      while ($row = mysqli_fetch_array($result)){
+        echo "<div class='ebook'>"; 
+        //Añadimos la imagen a la página con la etiqueta IMG de HTML
+        echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>"; 
+        //Añadimos el título a la página con la etiqueta h2 de HTML
+        //echo "<div class='desc'".$row['Title']." </div>; 
+        echo "</div>"; 
+      }
+
+    }else{
+      echo "0 resultados"; 
+    }
+   ?>
 
 </div>
   
