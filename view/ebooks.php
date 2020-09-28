@@ -6,6 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
+<script src="../javascript/code.js"></script>
 
 </head>
 <body>
@@ -35,6 +36,7 @@
     if(!empty($result) && mysqli_num_rows($result) > 0 ){
       //Datos de salida de cada fila
       $i=0; 
+      
       while ($row = mysqli_fetch_array($result)){
         $i++; 
         echo "<div class='ebook'>"; 
