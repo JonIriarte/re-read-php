@@ -26,11 +26,7 @@
   </div>
   <h3>Toda la actualidad en eBook</h3>
     <!--eBooks con descripción-->
-   <!--
-    <div class="ebook">
-        <img src="../img/cell.jpeg" alt="eBook 1">
-    </div>
-    -->
+    
    <?php
     //Conexión con la BBDD
     include '../services/connection.php'; 
@@ -38,13 +34,18 @@
 
     if(!empty($result) && mysqli_num_rows($result) > 0 ){
       //Datos de salida de cada fila
+      $i=0; 
       while ($row = mysqli_fetch_array($result)){
+        $i++; 
         echo "<div class='ebook'>"; 
         //Añadimos la imagen a la página con la etiqueta IMG de HTML
         echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>"; 
         //Añadimos el título a la página con la etiqueta h2 de HTML
-        //echo "<div class='desc'".$row['Title']." </div>; 
+        echo "<div class='desc'>".$row['Description']." </div>"; 
         echo "</div>"; 
+        if ($i%3==0) {
+          echo "<div style=clear:both;'></div>"; 
+        }
       }
 
     }else{
@@ -53,13 +54,24 @@
    ?>
 
 </div>
-  
+ <!--Columna de la derecha--> 
 <div class="column right">
-    <h2>Top Ventas</h2>
-    <p>Cien años de soledad.</p>
-    <p>Crónica de una muerte anunciada.</p>
-    <p>El otoño del patriarca.</p>
-    <p>El general en su laberinto.</p>
+<h2> Top Ventas</h2>
+<?php
+include '../services/connection.php'; 
+$result=mysqli_query($conn, "SELECT  Books.Title FROM books WHERE Top ='1'");
+
+if(!empty($result) && mysqli_num_rows($result) > 0 ){
+    //Datos de salida de cada fila=row
+    while ($row = mysqli_fetch_array($result)){
+       echo "<p>".$row['Title']."</>"; 
+    }
+
+  }else{
+    echo "0 resultados"; 
+  }
+?>
+
   </div>
 </div>
 

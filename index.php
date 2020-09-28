@@ -1,6 +1,4 @@
-
 </head><!DOCTYPE html>
-
 <html lang="en">
 <head>
 <title>Nuestro Proyecto Re-Read</title>
@@ -31,13 +29,24 @@
   <p>Somos la librería Eco-Friendly – Re-Read nació pensando en verde con el objetivo de compartir una pasión, la lectura y para expresar una preocupación: si queremos construir un futuro sostenible, es necesario que reduzcamos el consumo y que reutilicemos cuantos más objetos materiales mejor.
 </div>
   
+
+  <!--Columna de la derecha--> 
 <div class="column right">
-    <h2>Top Ventas</h2>
-    <p>Cien años de soledad.</p>
-    <p>Crónica de una muerte anunciada.</p>
-    <p>El otoño del patriarca.</p>
-    <p>El general en su laberinto.</p>
-  </div>
+<h2> Top Ventas</h2>
+<?php
+include './services/connection.php'; 
+$result=mysqli_query($conn, "SELECT  Books.Title FROM books WHERE Top ='1'");
+
+if(!empty($result) && mysqli_num_rows($result) > 0 ){
+    //Datos de salida de cada fila=row
+    while ($row = mysqli_fetch_array($result)){
+       echo "<p>".$row['Title']."</>"; 
+    }
+
+  }else{
+    echo "0 resultados"; 
+  }
+?>
 </div>
 
 </body>
