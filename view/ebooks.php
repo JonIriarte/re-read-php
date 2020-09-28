@@ -34,7 +34,7 @@
    <?php
     //Conexión con la BBDD
     include '../services/connection.php'; 
-    $result=mysqli_query($conn, "SELECT Books.Description, Books.Img, Books.Title FROM books WHERE eBook !='0'"); 
+    $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
 
     if(!empty($result) && mysqli_num_rows($result) > 0 ){
       //Datos de salida de cada fila
