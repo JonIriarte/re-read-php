@@ -1,5 +1,5 @@
 </head><!DOCTYPE html>
-
+include '../services/connection.php' 
 <html lang="en">
 <head>
 <title>Nuestro Proyecto Re-Read</title>
@@ -20,9 +20,9 @@
 
 <div class="column left">
   <div class="topnav">
-    <a href="../index.html">Re-Read</a>
-    <a href="libros.html">Libros</a>
-    <a href="./ebooks.html">eBooks</a>
+    <a href="../index.php">Re-Read</a>
+    <a href="libros.php">Libros</a>
+    <a href="./ebooks.php">eBooks</a>
   </div>
     <h3>Todos los libros tienen el mismo precio</h3>
     <p>Libros casi nuevos a un precio casi imposible.</p>
@@ -47,13 +47,23 @@
   </div>
 
   
-  <div class="column right">
-    <h2>Top Ventas</h2>
-    <p>Cien años de soledad.</p>
-    <p>Crónica de una muerte anunciada.</p>
-    <p>El otoño del patriarca.</p>
-    <p>El general en su laberinto.</p>
-  </div>
+    <!--Columna de la derecha--> 
+    <div class="column right">
+    <h2> Top Ventas</h2>
+    <?php
+    include '../services/connection.php'; 
+    $result=mysqli_query($conn, "SELECT  Books.Title FROM books WHERE Top ='1'");
+
+    if(!empty($result) && mysqli_num_rows($result) > 0 ){
+        //Datos de salida de cada fila=row
+        while ($row = mysqli_fetch_array($result)){
+          echo "<p>".$row['Title']."</>"; 
+        }
+
+      }else{
+        echo "0 resultados"; 
+      }
+    ?>
 </div>
 
 </body>
