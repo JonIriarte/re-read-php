@@ -1,12 +1,10 @@
 </head><!DOCTYPE html>
-
 <html lang="en">
 <head>
 <title>Nuestro Proyecto Re-Read</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
-<script src="../javascript/code.js"></script>
 
 </head>
 <body>
