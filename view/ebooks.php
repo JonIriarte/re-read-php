@@ -24,6 +24,25 @@
     <a href="./ebooks.php">eBooks</a>
   </div>
   <h3>Toda la actualidad en eBook</h3>
+<!--Nuevo desarrollo: formulario para filtrar autor-->
+<div class="formulario">
+  <form action="ebooks.php" method="POST">
+    <label for="fautor">Autor</label>
+    <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
+
+    <!-- <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select> -->
+  
+    <input type="submit" value="Buscar">
+  </form>
+</div>
     <!--eBooks con descripción-->
     
    <?php
