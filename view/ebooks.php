@@ -24,17 +24,26 @@
     <a href="./ebooks.php">eBooks</a>
   </div>
   <h3>Toda la actualidad en eBook</h3>
-<!--Nuevo desarrollo: formulario para filtrar autor-->
+<!--Nuevo desarrollo: formulario para filtrar por autor-->
 <div class="formulario">
   <form action="ebooks.php" method="POST">
     <label for="fautor">Autor</label>
     <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
-
+<!--Nuevo desarrollo: formulario para filtrar por país-->
     <label for="country">País</label>
     <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
+    <option value="%">Todos los paises</option>
+    <?php
+        //Conexión a BD
+        include '../services/connection.php'; 
+        $query="SELECT DISTINCT Authors.Country FROM Authors ORDER BY Country"; 
+        $result=mysqli_query($conn,$query); 
+        while ($row=mysqli_fetch_array($result)){
+          echo  '<option value="'.$row['Country'].'">'.$row['Country'].'</option>'; 
+
+        }
+     
+    ?>
     </select> 
   
     <input type="submit" value="Buscar">
@@ -42,7 +51,6 @@
 
 </div>
 <?php
-  include '../services/connection.php'; 
 
     if(isset($_POST['fautor'])){
 
@@ -50,8 +58,7 @@
       $query="SELECT Books.Description, Books.img, Books.Title 
       FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
       INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
-      WHERE Authors.Name LIKE '%{$_POST['fautor']}%'";
-    echo $query; 
+      WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}'";
       $result=mysqli_query($conn, $query); 
   
     }else{
