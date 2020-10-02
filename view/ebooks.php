@@ -24,18 +24,56 @@
     <a href="./ebooks.php">eBooks</a>
   </div>
   <h3>Toda la actualidad en eBook</h3>
-    <!--eBooks con descripción-->
-    
-   <?php
-    //Conexión con la BBDD
-    include '../services/connection.php'; 
-    $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
+<!--Nuevo desarrollo: formulario para filtrar por autor-->
+<div class="formulario">
+  <form action="ebooks.php" method="POST">
+    <label for="fautor">Autor</label>
+    <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
+<!--Nuevo desarrollo: formulario para filtrar por país-->
+    <label for="country">País</label>
+    <select id="country" name="country">
+    <option value="%">Todos los paises</option>
+    <?php
+        //Conexión a BD
+        include '../services/connection.php'; 
+        $query="SELECT DISTINCT Authors.Country FROM Authors ORDER BY Country"; 
+        $result=mysqli_query($conn,$query); 
+        while ($row=mysqli_fetch_array($result)){
+          echo  '<option value="'.$row['Country'].'">'.$row['Country'].'</option>'; 
 
+        }
+     
+    ?>
+    </select> 
+  
+    <input type="submit" value="Buscar">
+  </form>
+
+</div>
+<?php
+
+    if(isset($_POST['fautor'])){
+
+      //Filtro para los Ebooks que se mostrarán en la página
+      $query="SELECT Books.Description, Books.img, Books.Title 
+      FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
+      INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
+      WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}'";
+      $result=mysqli_query($conn, $query); 
+  
+    }else{
+
+      //Mostrar todos los eBooks de la DB
+      //Conexión con la BBDD
+    
+      $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
+    
+    }
     if(!empty($result) && mysqli_num_rows($result) > 0 ){
       //Datos de salida de cada fila
       $i=0; 
       
-      while ($row = mysqli_fetch_array($result)){
+      while($row = mysqli_fetch_array($result)){
         $i++; 
         echo "<div class='ebook'>"; 
         //Añadimos la imagen a la página con la etiqueta IMG de HTML
@@ -51,10 +89,10 @@
     }else{
       echo "0 resultados"; 
     }
-   ?>
+  ?>
 
 </div>
- <!--Columna de la derecha--> 
+<!--Columna de la derecha--> 
 <div class="column right">
 <h2> Top Ventas</h2>
 <?php
@@ -62,15 +100,23 @@ include '../services/connection.php';
 $result=mysqli_query($conn, "SELECT  Books.Title FROM books WHERE Top ='1'");
 
 if(!empty($result) && mysqli_num_rows($result) > 0 ){
-    //Datos de salida de cada fila=row
-    while ($row = mysqli_fetch_array($result)){
-       echo "<p>".$row['Title']."</>"; 
-    }
+   //Datos de salida de cada fila=row
+   while ($row = mysqli_fetch_array($result)){
+      echo "<p>".$row['Title']."</>"; 
+   }
 
-  }else{
-    echo "0 resultados"; 
-  }
+ }else{
+   echo "0 resultados"; 
+ }
+
+
+
 ?>
+
+  
+    
+  
+
 
   </div>
 </div>
