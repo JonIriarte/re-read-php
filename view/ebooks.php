@@ -30,15 +30,12 @@
     <label for="fautor">Autor</label>
     <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
 
-    <!-- <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-
-    <label for="country">Country</label>
+    <label for="country">País</label>
     <select id="country" name="country">
       <option value="australia">Australia</option>
       <option value="canada">Canada</option>
       <option value="usa">USA</option>
-    </select> -->
+    </select> 
   
     <input type="submit" value="Buscar">
   </form>
@@ -48,8 +45,14 @@
   include '../services/connection.php'; 
 
     if(isset($_POST['fautor'])){
+
       //Filtro para los Ebooks que se mostrarán en la página
-      $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
+      $query="SELECT Books.Description, Books.img, Books.Title 
+      FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
+      INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
+      WHERE Authors.Name LIKE '%{$_POST['fautor']}%'";
+    echo $query; 
+      $result=mysqli_query($conn, $query); 
   
     }else{
 
