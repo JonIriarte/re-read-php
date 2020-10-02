@@ -42,19 +42,28 @@
   
     <input type="submit" value="Buscar">
   </form>
-</div>
-    <!--eBooks con descripción-->
-    
-   <?php
-    //Conexión con la BBDD
-    include '../services/connection.php'; 
-    $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
 
+</div>
+<?php
+  include '../services/connection.php'; 
+
+    if(isset($_POST['fautor'])){
+      //Filtro para los Ebooks que se mostrarán en la página
+      $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
+  
+    }else{
+
+      //Mostrar todos los eBooks de la DB
+      //Conexión con la BBDD
+    
+      $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
+    
+    }
     if(!empty($result) && mysqli_num_rows($result) > 0 ){
       //Datos de salida de cada fila
       $i=0; 
       
-      while ($row = mysqli_fetch_array($result)){
+      while($row = mysqli_fetch_array($result)){
         $i++; 
         echo "<div class='ebook'>"; 
         //Añadimos la imagen a la página con la etiqueta IMG de HTML
@@ -70,10 +79,10 @@
     }else{
       echo "0 resultados"; 
     }
-   ?>
+  ?>
 
 </div>
- <!--Columna de la derecha--> 
+<!--Columna de la derecha--> 
 <div class="column right">
 <h2> Top Ventas</h2>
 <?php
@@ -81,15 +90,23 @@ include '../services/connection.php';
 $result=mysqli_query($conn, "SELECT  Books.Title FROM books WHERE Top ='1'");
 
 if(!empty($result) && mysqli_num_rows($result) > 0 ){
-    //Datos de salida de cada fila=row
-    while ($row = mysqli_fetch_array($result)){
-       echo "<p>".$row['Title']."</>"; 
-    }
+   //Datos de salida de cada fila=row
+   while ($row = mysqli_fetch_array($result)){
+      echo "<p>".$row['Title']."</>"; 
+   }
 
-  }else{
-    echo "0 resultados"; 
-  }
+ }else{
+   echo "0 resultados"; 
+ }
+
+
+
 ?>
+
+  
+    
+  
+
 
   </div>
 </div>
