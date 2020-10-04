@@ -47,6 +47,7 @@ if(!empty($result) && mysqli_num_rows($result) > 0 ){
   }else{
     echo "0 resultados"; 
   }
+  
 ?>
 </div>
 

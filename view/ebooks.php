@@ -29,6 +29,9 @@
   <form action="ebooks.php" method="POST">
     <label for="fautor">Autor</label>
     <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
+ <!--Nuevo desarrollo: filtrar por título de obra-->
+  <label for="title">Título</label>
+    <input type="text" id="title" name="title" placeholder="Introduce el título...">   
 <!--Nuevo desarrollo: formulario para filtrar por país-->
     <label for="country">País</label>
     <select id="country" name="country">
@@ -52,23 +55,50 @@
 </div>
 <?php
 
-    if(isset($_POST['fautor'])){
+    if(isset($_POST['fautor']) && ($_POST['fautor'])!="" && !(is_null($_POST['fautor']))){
 
       //Filtro para los Ebooks que se mostrarán en la página
       $query="SELECT Books.Description, Books.img, Books.Title 
       FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
       INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
-      WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}'";
-      $result=mysqli_query($conn, $query); 
-  
-    }else{
+      WHERE Authors.Name LIKE '%{$_POST['fautor']}%'";
 
-      //Mostrar todos los eBooks de la DB
-      //Conexión con la BBDD
-    
-      $result=mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'"); 
-    
+      if(isset($_POST['country']) && $_POST['country']!="" && !(is_null($_POST['country'])) && !(($_POST['country'])=="%")){
+        $query = $query." AND Authors.Country LIKE '%{$_POST['country']}%'";
+      }
+      if(isset($_POST['title']) && ($_POST['title'])!="" && !(is_null($_POST['title']))){
+        $query = $query." AND Authors.Title LIKE '%{$_POST['title']}%'"; 
+      }
     }
+    else{
+      if(isset($_POST['title']) && ($_POST['title'])!="" && !(is_null($_POST['title']))){
+        echo "habemus título pero no autor";
+        echo ($_POST['title']);
+        $query="SELECT Books.Description, Books.img, Books.Title 
+        FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
+        INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
+        WHERE Authors.Title LIKE '%{$_POST['title']}%'"; 
+        if(isset($_POST['country']) && $_POST['country']!="" && !(is_null($_POST['country'])) && !(($_POST['country'])=="%")){
+          $query = $query." AND Authors.Country LIKE '%{$_POST['country']}%'"; 
+        }
+      }
+      else{
+        echo !($_POST['country'])=="%";
+        if(isset($_POST['country']) && $_POST['country']!="" && !(is_null($_POST['country'])) && !(($_POST['country'])=="%")){
+          $query="SELECT Books.Description, Books.img, Books.Title 
+          FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
+          INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
+          WHERE Authors.Country LIKE '%{$_POST['country']}%'"; 
+        }
+        else{
+         //Mostrar todos los eBooks de la DB
+        //Conexión con la BBDD
+         $query="SELECT Books.Description, Books.img, Books.Title FROM books WHERE eBook !='0'";
+        } 
+      }
+    }
+    $result=mysqli_query($conn, $query);
+  
     if(!empty($result) && mysqli_num_rows($result) > 0 ){
       //Datos de salida de cada fila
       $i=0; 
@@ -92,6 +122,7 @@
   ?>
 
 </div>
+
 <!--Columna de la derecha--> 
 <div class="column right">
 <h2> Top Ventas</h2>
@@ -109,6 +140,10 @@ if(!empty($result) && mysqli_num_rows($result) > 0 ){
    echo "0 resultados"; 
  }
 
+
+
+  mysqli_free_result($result);
+  mysqli_close($conn); 
 
 
 ?>
