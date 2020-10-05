@@ -24,12 +24,15 @@
     <a href="./ebooks.php">eBooks</a>
   </div>
   <h3>Toda la actualidad en eBook</h3>
-<!--Nuevo desarrollo: formulario para filtrar por autor-->
-<div class="formulario">
+  <!--Nuevo desarrollo: formulario para filtrar por autor-->
+  <div class="formulario">
   <form action="ebooks.php" method="POST">
     <label for="fautor">Autor</label>
     <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
-<!--Nuevo desarrollo: formulario para filtrar por país-->
+  <!--Nuevo desarrollo: filtrar por título de obra-->
+  <label for="title">Título</label>
+    <input type="text" id="title" name="title" placeholder="Introduce el título...">   
+  <!--Nuevo desarrollo: formulario para filtrar por país-->
     <label for="country">País</label>
     <select id="country" name="country">
     <option value="%">Todos los paises</option>
@@ -58,7 +61,7 @@
       $query="SELECT Books.Description, Books.img, Books.Title 
       FROM Books INNER JOIN BooksAuthors ON Id=BooksAuthors.BookId
       INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId
-      WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}'";
+      WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}' AND Books.Title LIKE '%{$_POST['title']}%'";
       $result=mysqli_query($conn, $query); 
   
     }else{
@@ -103,13 +106,15 @@ if(!empty($result) && mysqli_num_rows($result) > 0 ){
    //Datos de salida de cada fila=row
    while ($row = mysqli_fetch_array($result)){
       echo "<p>".$row['Title']."</>"; 
+
    }
 
  }else{
    echo "0 resultados"; 
  }
 
-
+mysqli_free_result($result); 
+mysqli_close($conn); 
 
 ?>
 
